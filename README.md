@@ -1,26 +1,55 @@
-# 🏋️‍♂️ Digital Personal Trainer : Generative Coaching Engine
+# 🏋️‍♂️ Digital Personal Trainer : Coach Sportif Virtuel
 
 ![Python](https://img.shields.io/badge/Python-3.9+-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![Streamlit](https://img.shields.io/badge/Frontend-Streamlit-FF4B4B?style=for-the-badge&logo=streamlit)
 ![ReportLab](https://img.shields.io/badge/PDF_Engine-ReportLab-000000?style=for-the-badge)
-![Plotly](https://img.shields.io/badge/Viz-Plotly_Interactive-3F4F75?style=for-the-badge)
 
 > **Projet Application Web & Algorithmique**
-> **Auteurs :** Tom Le Corre & Rishikaran Karunakaran
+
 
 ---
 
-## 🚀 Vision du Projet & Complexité Technique
+## 📋 Ce que fait le projet
 
-Ce projet dépasse le cadre d'une simple application de suivi sportif. Il s'agit d'un **Moteur Génératif** complet capable de construire, en temps réel, des programmes d'entraînement et de nutrition sur-mesure sur une période de 4 semaines.
+Ce projet est une application web interactive qui agit comme un **coach sportif intelligent**. Elle permet à un utilisateur de générer instantanément un programme complet (Sport & Nutrition) sur 4 semaines, adapté à sa morphologie et ses objectifs.
 
-L'objectif technique était de simuler l'intelligence d'un coach sportif à travers des algorithmes décisionnels basés sur des métriques physiologiques.
+Concrètement, l'application réalise les tâches suivantes :
 
-### 🔥 Les Défis Techniques Relevés
-1.  **Architecture Modulaire (MVC-like) :** Nous avons implémenté une séparation stricte entre la logique métier (Backend) et l'interface utilisateur (Frontend) pour garantir la robustesse et la maintenabilité du code.
-2.  **Moteur de Génération PDF (ReportLab) :** Le défi majeur a été de développer un pipeline d'export complexe. L'application ne se contente pas d'afficher des données ; elle **dessine programmatiquement** des fichiers binaires PDF (avec tableaux stylisés et mise en page dynamique) prêts à l'impression.
-3.  **Algorithmique Métabolique :** Implémentation de formules physiologiques (BMR, TDEE) ajustées dynamiquement selon l'objectif (Sèche, Prise de masse) et le niveau sportif.
-4.  **Projections Prédictives :** Modélisation mathématique de l'évolution du poids sur 4 semaines en fonction du déficit/surplus calorique calculé.
+1.  **Analyse Métabolique :** Elle calcule l'IMC, le Métabolisme de Base (BMR) et la Dépense Énergétique Journalière (TDEE) en fonction de l'âge, du poids, de la taille et du niveau d'activité.
+2.  **Génération de Programme Sportif :** Elle crée un planning d'entraînement jour par jour sur 4 semaines. L'intensité et le nombre de séances s'adaptent automatiquement au niveau de l'utilisateur (Débutant, Intermédiaire, Avancé).
+3.  **Planification Nutritionnelle :** Elle calcule les besoins en macronutriments (Protéines, Glucides, Lipides) selon l'objectif (Sèche, Prise de masse) et génère des menus types.
+4.  **Visualisation Prédictive :** Elle projette l'évolution théorique du poids de l'utilisateur sur le mois à venir sous forme de graphique interactif.
+5.  **Export PDF Dynamique :** Elle permet de télécharger le programme complet sous forme d'un fichier PDF propre et mis en page, généré directement par le code (pas de simple capture d'écran).
+
+---
+
+## 📂 Architecture : Qui fait quoi ?
+
+Le code est séparé en deux fichiers principaux pour distinguer le calcul (Backend) de l'affichage (Frontend).
+
+### 1. `interface2.py` (L'Interface Utilisateur)
+C'est le fichier que l'on exécute pour lancer l'application. Il gère toute la partie visuelle avec **Streamlit**.
+* **Formulaires :** Récupère les données utilisateur (Sliders pour le poids/taille, menus déroulants pour les objectifs).
+* **Visualisation :** Affiche les graphiques :
+    * Diagrammes circulaires (`Plotly`) pour la répartition des macros.
+    * Courbes (`Matplotlib`) pour la prévision de perte/gain de poids.
+* **Orchestration :** C'est lui qui "appelle" les fonctions de calcul et gère le bouton de téléchargement du PDF.
+
+### 2. `calculs2.py` (Le Moteur de Calcul)
+C'est le cerveau de l'application. Il ne contient aucune interface graphique.
+* **Logique Mathématique :** Contient les formules physiologiques (Mifflin-St Jeor) pour calculer les calories et l'IMC.
+* **Génération de Données :** Construit les tableaux de données (`Pandas Dataframes`) pour le planning sportif et nutritionnel en fonction des règles métiers (ex: Si "Prise de masse" -> Augmenter les protéines).
+* **Moteur PDF :** Utilise la librairie `ReportLab` pour dessiner le fichier PDF final (tableaux, styles, couleurs) octet par octet.
+
+---
+
+## 🛠️ Stack Technique
+
+* **Langage :** Python 3.9
+* **Interface Web :** `Streamlit`
+* **Manipulation de Données :** `Pandas`, `NumPy`
+* **Génération PDF :** `ReportLab` (Platypus engine)
+* **Graphiques :** `Plotly Express`, `Matplotlib`
 
 ---
 
@@ -36,51 +65,3 @@ C -->|Calculs BMR & Plans| D[Dataframes Pandas]
 C -->|Génération Binaire| E[PDF Engine]
 D -->|Visualisation| F[Graphiques Plotly/Matplotlib]
 E -->|Download| B
-📂 1. Le Backend Logique : calculs2.py
-C'est le "cerveau" de l'application. Ce fichier ne contient aucune interface graphique, uniquement des fonctions pures.
-
-Calculs Physiologiques : Contient les fonctions calculer_imc et calculer_calories (Formule de Mifflin-St Jeor) pour déterminer le métabolisme de base et les besoins journaliers.
-
-Générateurs de Plans : Algorithmes (generer_programme_sport, generer_plan_nutrition) qui construisent des Dataframes Pandas jour par jour en faisant varier l'intensité et les macros selon le profil utilisateur (Débutant/Avancé).
-
-PDF Factory : Utilisation avancée de la librairie reportlab. Le code génère les fichiers PDF octet par octet (BytesIO), intégrant des tableaux complexes (TableStyle) et des mises en page structurées pour l'export.
-
-📂 2. Le Frontend Interactif : interface2.py
-C'est la couche de présentation gérée par Streamlit.
-
-Collecte de Données : Formulaires dynamiques (Sliders, Selectbox) pour récupérer l'âge, le poids, le niveau, etc.
-
-Orchestration : Appelle les fonctions du backend et transforme les données brutes en visualisations interactives.
-
-Dataviz :
-
-Plotly Express pour les diagrammes circulaires (Répartition Macros : Protéines/Glucides/Lipides).
-
-Matplotlib pour tracer les courbes de projection de perte/gain de poids sur le mois à venir (prevision_poids).
-
-📊 Fonctionnalités Clés
-🔹 Planification Intelligente (4 Semaines)
-L'algorithme génère un tableau complet jour par jour. Le volume d'entraînement est ajusté automatiquement (Ex: 3 séances/semaine pour un débutant vs 5 pour un expert).
-
-🔹 Moteur Nutritionnel & Macros
-Calcul automatique des macronutriments et suggestion d'aliments spécifiques. L'algorithme adapte les ratios selon l'objectif (Ex: Augmentation des protéines pour une prise de masse).
-
-🔹 Export PDF Professionnel
-L'utilisateur peut télécharger son programme. Ce n'est pas une simple capture d'écran, mais un document PDF natif généré par le code, incluant le branding et les tableaux formatés.
-
-🛠️ Stack Technique & Algorithmes (SEO)
-📚 Bibliothèques Principales
-Frontend : streamlit (Interface réactive et déploiement).
-
-Data Processing : pandas (Structure des plans hebdomadaires), numpy (Calculs de projection vectorielle).
-
-Document Engineering : reportlab (Génération programmatique de PDF, gestion des Canvas et Platypus).
-
-Visualisation : plotly (Graphiques interactifs), matplotlib (Courbes de tendance statiques).
-
-🧮 Concepts Clés
-Programmation Fonctionnelle : Code découpé en fonctions réutilisables.
-
-Data Visualization : Représentation graphique des projections.
-
-File Handling : Gestion des flux de données binaires (io.BytesIO) pour le téléchargement de fichiers générés en mémoire sans stockage disque.
