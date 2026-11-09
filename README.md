@@ -1,4 +1,4 @@
-# 🏋️‍♂️ Digital Personal Trainer : Coach Sportif Virtuel
+# Digital Personal Trainer : Coach Sportif Virtuel
 
 ![Python](https://img.shields.io/badge/Python-3.9+-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![Streamlit](https://img.shields.io/badge/Frontend-Streamlit-FF4B4B?style=for-the-badge&logo=streamlit)
@@ -9,7 +9,7 @@
 
 ---
 
-## 📋 Ce que fait le projet
+## Ce que fait le projet
 
 Ce projet est une application web interactive qui agit comme un **coach sportif intelligent**. Elle permet à un utilisateur de générer instantanément un programme complet (Sport & Nutrition) sur 4 semaines, adapté à sa morphologie et ses objectifs.
 
@@ -23,7 +23,7 @@ Concrètement, l'application réalise les tâches suivantes :
 
 ---
 
-## 📂 Architecture : Qui fait quoi ?
+## Architecture : Qui fait quoi ?
 
 Le code est séparé en deux fichiers principaux pour distinguer le calcul (Backend) de l'affichage (Frontend).
 
@@ -43,7 +43,7 @@ C'est le cerveau de l'application. Il ne contient aucune interface graphique.
 
 ---
 
-## 🛠️ Stack Technique
+## Stack Technique
 
 * **Langage :** Python 3.9
 * **Interface Web :** `Streamlit`
@@ -53,7 +53,7 @@ C'est le cerveau de l'application. Il ne contient aucune interface graphique.
 
 ---
 
-## 🏗 Architecture Logicielle & Rôle des Fichiers
+## Architecture Logicielle & Rôle des Fichiers
 
 Le projet est structuré autour de deux noyaux distincts pour séparer le traitement des données de l'affichage.
 
